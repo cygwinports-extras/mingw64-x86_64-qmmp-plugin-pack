@@ -1,0 +1,26 @@
+--- origsrc/qmmp-plugin-pack-0.7.5/CMakeLists.txt	2014-02-11 09:38:15.000000000 -0600
++++ src/qmmp-plugin-pack-0.7.5/CMakeLists.txt	2014-02-16 14:49:49.145098100 -0600
+@@ -1,7 +1,7 @@
+ cmake_minimum_required(VERSION 2.8.0)
+ 
+ #freebsd include
+-include_directories(SYSTEM /usr/include /usr/local/include)
++include_directories(SYSTEM ${CMAKE_INSTALL_PREFIX}/include)
+ 
+ 
+ CONFIGURE_FILE(
+--- origsrc/qmmp-plugin-pack-0.7.5/src/Input/ffap/CMakeLists.txt	2014-02-16 14:52:52.124563900 -0600
++++ src/qmmp-plugin-pack-0.7.5/src/Input/ffap/CMakeLists.txt	2014-02-16 14:45:34.927557700 -0600
+@@ -68,7 +68,11 @@ IF(USE_ASM AND (NOT YASM_PATH MATCHES "^
+     SET(libffap_SRCS ${libffap_SRCS} dsputil_yasm.asm x86inc.asm)
+     IF(CMAKE_SYSTEM_PROCESSOR MATCHES "^(i.86)$")
+       ADD_DEFINITIONS(-DARCH_X86_32)
+-      set_source_files_properties(x86inc.asm dsputil_yasm.asm PROPERTIES COMPILE_FLAGS "-m x86 -DARCH_X86_32")
++      IF(WIN32 OR CYGWIN)
++        set_source_files_properties(x86inc.asm dsputil_yasm.asm PROPERTIES COMPILE_FLAGS "-m x86 -DARCH_X86_32 -DPREFIX")
++      ELSE(WIN32 OR CYGWIN)
++        set_source_files_properties(x86inc.asm dsputil_yasm.asm PROPERTIES COMPILE_FLAGS "-m x86 -DARCH_X86_32")
++      ENDIF(WIN32 OR CYGWIN)
+       message("-- Architecture: x86")
+     ELSEIF(CMAKE_SYSTEM_PROCESSOR STREQUAL "x86_64")
+       ADD_DEFINITIONS(-DARCH_X86_64)

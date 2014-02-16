@@ -1,0 +1,16 @@
+CROSS_HOST="x86_64-w64-mingw32"
+inherit cross qt4-cmake
+
+NAME="mingw64-x86_64-qmmp-plugin-pack"
+VERSION=0.7.5
+RELEASE=1
+CATEGORY="Devel"
+SUMMARY="Additional plugins for Win64 QMMP audio player"
+DESCRIPTION="The Qt Multimedia Player is a audio player with a user interface
+similar to WinAmp or XMMS."
+HOMEPAGE="http://qmmp.ylsoftware.com/"
+SRC_URI="http://qmmp.ylsoftware.com/files/plugins/qmmp-plugin-pack-${VERSION}.tar.bz2"
+SRC_DIR="qmmp-plugin-pack-${VERSION}"
+PATCH_URI="0.7.5-mingw.patch"
+
+CYGCMAKE_ARGS="-DQT_LRELEASE_EXECUTABLE=${QT4_LRELEASE}"
